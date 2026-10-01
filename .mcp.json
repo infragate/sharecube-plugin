@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "sharecube": { "type": "http", "url": "https://app.sharecube.io/mcp" }
+  }
+}
