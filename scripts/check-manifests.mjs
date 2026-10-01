@@ -26,14 +26,21 @@ for (const [file, manifest] of Object.entries(manifests)) {
   }
 }
 
-const marketplace = read('.claude-plugin/marketplace.json');
-expect(marketplace.plugins.some((p) => p.name === name), `.claude-plugin/marketplace.json: no plugin named "${name}"`);
+for (const file of ['.claude-plugin/marketplace.json', '.cursor-plugin/marketplace.json']) {
+  expect(read(file).plugins.some((p) => p.name === name), `${file}: no plugin named "${name}"`);
+}
 
-// mcp.json (Agent Plugins) and .mcp.json (everyone else) differ only in the
-// transport's spelling, so the servers and URLs must match.
-const urls = (file) =>
-  Object.entries(read(file).mcpServers).map(([id, server]) => `${id} ${server.url ?? server.command}`).sort().join('\n');
-expect(urls('mcp.json') === urls('.mcp.json'), 'mcp.json and .mcp.json describe different servers');
+// The same MCP server is spelled three ways: mcp.json (Agent Plugins),
+// .mcp.json (Claude Code, Codex), and inline in the Cursor manifest. Only the
+// transport field differs, so the servers and URLs must match.
+const servers = (mcpServers) =>
+  Object.entries(mcpServers).map(([id, server]) => `${id} ${server.url ?? server.command}`).sort().join('\n');
+const expected = servers(read('mcp.json').mcpServers);
+expect(servers(read('.mcp.json').mcpServers) === expected, '.mcp.json describes different servers than mcp.json');
+expect(
+  servers(manifests['.cursor-plugin/plugin.json'].mcpServers) === expected,
+  '.cursor-plugin/plugin.json mcpServers describe different servers than mcp.json',
+);
 
 // Agent Skills requires the frontmatter name to match the skill's directory.
 for (const dir of readdirSync('skills')) {
