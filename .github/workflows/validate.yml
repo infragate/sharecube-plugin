@@ -1,0 +1,37 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      - name: Manifests agree with each other
+        run: node scripts/check-manifests.mjs
+
+      # The schema URLs in $schema do not resolve, so fetch them from the spec repo.
+      - name: Agent Plugins 1.1.0 schemas
+        run: |
+          base=https://raw.githubusercontent.com/agentplugins/agent-plugins-spec/main/schemas/1.1.0
+          curl -fsSL "$base/plugin.schema.json" -o "$RUNNER_TEMP/plugin.schema.json"
+          curl -fsSL "$base/mcp.schema.json" -o "$RUNNER_TEMP/mcp.schema.json"
+          npx --yes ajv-cli@5 validate --spec=draft2020 --strict=false -s "$RUNNER_TEMP/plugin.schema.json" -d plugin.json
+          npx --yes ajv-cli@5 validate --spec=draft2020 --strict=false -s "$RUNNER_TEMP/mcp.schema.json" -d mcp.json
+
+      - name: Claude Code plugin and marketplace
+        run: |
+          npx --yes @anthropic-ai/claude-code plugin validate .claude-plugin/plugin.json
+          npx --yes @anthropic-ai/claude-code plugin validate .
