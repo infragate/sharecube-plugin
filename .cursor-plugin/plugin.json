@@ -8,6 +8,6 @@
   "repository": "https://github.com/infragate/sharecube-plugin",
   "keywords": ["sharecube", "artifacts", "sharing", "mcp"],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
+  "mcpServers": { "sharecube": { "url": "https://app.sharecube.io/mcp" } },
   "logo": "./assets/logo.png"
 }

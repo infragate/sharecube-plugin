@@ -46,10 +46,10 @@ One tree serves every host. Each reads its own manifest and shares the same skil
 | --- | --- | --- |
 | [Agent Plugins](https://agent-plugins.org) clients | `plugin.json` | `mcp.json` |
 | Claude Code | `.claude-plugin/plugin.json` | `.mcp.json` |
-| Cursor | `.cursor-plugin/plugin.json` | `.mcp.json` |
+| Cursor | `.cursor-plugin/plugin.json` | inline in its `plugin.json` |
 | Codex | `.codex-plugin/plugin.json` | `.mcp.json` |
 
-`mcp.json` and `.mcp.json` describe the same server. They are separate because the Agent Plugins schema calls the transport `streamable-http` and the other hosts call it `http`.
+All three describe the same server. They are separate because each host spells the transport differently: `streamable-http` for Agent Plugins, `http` for Claude Code and Codex, and no type at all for Cursor, which infers it from the URL.
 
 ## Development
 
@@ -65,6 +65,6 @@ Check the manifests before you push:
 node scripts/check-manifests.mjs
 ```
 
-It fails if the manifests disagree on name or version, reference a file that does not exist, or describe different MCP servers. CI runs it on every push and pull request, along with the Agent Plugins 1.1.0 schemas and `claude plugin validate`.
+It fails if the manifests disagree on name or version, reference a file that does not exist, or describe different MCP servers. CI runs it on every push and pull request, along with the Agent Plugins 1.1.0 schemas, Cursor's validator from [cursor/plugin-template](https://github.com/cursor/plugin-template), and `claude plugin validate`.
 
 To release, bump `version` in all four manifests together.
