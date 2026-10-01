@@ -14,7 +14,7 @@
 [![Cursor](https://img.shields.io/badge/Cursor-plugin-a99ad9)](#hosts)
 [![Codex](https://img.shields.io/badge/Codex-plugin-a99ad9)](#hosts)
 
-[Website](https://sharecube.io) · [MCP docs](https://docs.infragate.ai/sharecube/mcp/)
+[Website](https://sharecube.io) · [Docs](https://docs.infragate.ai/sharecube/) · [MCP setup](https://docs.infragate.ai/sharecube/mcp/)
 
 </div>
 
