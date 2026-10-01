@@ -11,8 +11,9 @@
 [![MCP](https://img.shields.io/badge/MCP-Streamable%20HTTP-6249b5)](https://docs.infragate.ai/sharecube/mcp/)
 <br>
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-a99ad9)](#claude-code)
-[![Cursor](https://img.shields.io/badge/Cursor-plugin-a99ad9)](#hosts)
+[![Cursor](https://img.shields.io/badge/Cursor-plugin-a99ad9)](#cursor)
 [![Codex](https://img.shields.io/badge/Codex-plugin-a99ad9)](#hosts)
+[![License: MIT](https://img.shields.io/badge/License-MIT-a99ad9)](LICENSE)
 
 [Website](https://sharecube.io) · [Docs](https://docs.infragate.ai/sharecube/) · [MCP setup](https://docs.infragate.ai/sharecube/mcp/)
 
@@ -25,7 +26,7 @@
 Your agent writes a report, a plan, or a page. ShareCube turns it into a link your team can open, comment on, and edit. The plugin gives the agent:
 
 - **The ShareCube MCP server** at `https://app.sharecube.io/mcp`, for creating, finding, editing, and commenting on artifacts. Sign-in is OAuth, so there are no keys to configure.
-- **A `sharecube` skill** that tells the agent when to reach for ShareCube and how to use it well: partial edits instead of full rewrites, anchored comments, and real @mentions.
+- **A `sharecube` skill** that tells the agent when to reach for ShareCube and how to use it safely: targeted edits that never overwrite changes people made in the web app, HTML that works in ShareCube's sandboxed viewer, anchored and resolved comments, and confirming before a permanent delete.
 
 ## Install
 
@@ -37,6 +38,20 @@ Your agent writes a report, a plan, or a page. ShareCube turns it into a link yo
 ```
 
 The first ShareCube tool call opens a browser window to sign in.
+
+### Cursor
+
+1. Open **Cursor Settings → Plugins**.
+2. Search for **ShareCube**.
+3. Click **Install**, then sign in to ShareCube when Cursor prompts you.
+
+Or run `/add-plugin sharecube` in chat.
+
+To run it from source instead, clone it into Cursor's local plugins folder and restart Cursor:
+
+```
+git clone https://github.com/infragate/sharecube-plugin ~/.cursor/plugins/local/sharecube
+```
 
 ### Hosts
 
@@ -65,6 +80,10 @@ Check the manifests before you push:
 node scripts/check-manifests.mjs
 ```
 
-It fails if the manifests disagree on name or version, reference a file that does not exist, or describe different MCP servers. CI runs it on every push and pull request, along with the Agent Plugins 1.1.0 schemas, Cursor's validator from [cursor/plugin-template](https://github.com/cursor/plugin-template), and `claude plugin validate`.
+It fails if the manifests disagree on name, version, or license, reference a file that does not exist, or describe different MCP servers. CI runs it on every push and pull request, along with the Agent Plugins 1.1.0 schemas, Cursor's validator from [cursor/plugin-template](https://github.com/cursor/plugin-template), and `claude plugin validate`.
 
-To release, bump `version` in all four manifests together.
+To release, bump `version` in all four manifests together and add an entry to [CHANGELOG.md](CHANGELOG.md).
+
+## License
+
+[MIT](LICENSE)

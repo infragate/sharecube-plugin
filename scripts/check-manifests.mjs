@@ -16,8 +16,10 @@ const manifests = {
 const { name, version } = manifests['plugin.json'];
 
 for (const [file, manifest] of Object.entries(manifests)) {
-  expect(manifest.name === name, `${file}: name is "${manifest.name}", plugin.json says "${name}"`);
-  expect(manifest.version === version, `${file}: version is "${manifest.version}", plugin.json says "${version}"`);
+  for (const field of ['name', 'version', 'license']) {
+    const want = manifests['plugin.json'][field];
+    expect(manifest[field] === want, `${file}: ${field} is "${manifest[field]}", plugin.json says "${want}"`);
+  }
 
   // Every plugin-relative path a manifest references has to exist.
   const paths = JSON.stringify(manifest).match(/"\.\/[^"]*"/g) ?? [];

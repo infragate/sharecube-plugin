@@ -6,6 +6,7 @@
   "author": { "name": "Infragate", "url": "https://sharecube.io" },
   "homepage": "https://docs.infragate.ai/sharecube/",
   "repository": "https://github.com/infragate/sharecube-plugin",
+  "license": "MIT",
   "keywords": ["sharecube", "artifacts", "sharing", "mcp"],
   "category": "productivity",
   "tags": ["documents", "sharing", "comments", "mcp"],
