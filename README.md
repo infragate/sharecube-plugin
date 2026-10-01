@@ -8,13 +8,13 @@
 
 [![Validate](https://github.com/infragate/sharecube-plugin/actions/workflows/validate.yml/badge.svg)](https://github.com/infragate/sharecube-plugin/actions/workflows/validate.yml)
 [![Agent Plugins 1.1.0](https://img.shields.io/badge/Agent%20Plugins-1.1.0-6249b5)](https://agent-plugins.org)
-[![MCP](https://img.shields.io/badge/MCP-Streamable%20HTTP-6249b5)](https://sharecube.io/docs/mcp)
+[![MCP](https://img.shields.io/badge/MCP-Streamable%20HTTP-6249b5)](https://docs.infragate.ai/sharecube/mcp/)
 <br>
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-a99ad9)](#claude-code)
 [![Cursor](https://img.shields.io/badge/Cursor-plugin-a99ad9)](#hosts)
 [![Codex](https://img.shields.io/badge/Codex-plugin-a99ad9)](#hosts)
 
-[Website](https://sharecube.io) · [MCP docs](https://sharecube.io/docs/mcp)
+[Website](https://sharecube.io) · [MCP docs](https://docs.infragate.ai/sharecube/mcp/)
 
 </div>
 
