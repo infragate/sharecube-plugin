@@ -13,6 +13,8 @@
     "shortDescription": "Share agent-made HTML and Markdown artifacts",
     "developerName": "Infragate",
     "category": "Productivity",
-    "websiteURL": "https://sharecube.io"
+    "websiteURL": "https://sharecube.io",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   }
 }
