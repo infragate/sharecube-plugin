@@ -14,6 +14,7 @@
     "developerName": "Infragate",
     "category": "Productivity",
     "websiteURL": "https://sharecube.io",
+    "brandColor": "#6249B5",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png"
   }
