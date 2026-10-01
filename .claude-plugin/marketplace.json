@@ -1,0 +1,8 @@
+{
+  "name": "sharecube",
+  "owner": { "name": "Infragate" },
+  "description": "The ShareCube plugin for Claude Code.",
+  "plugins": [
+    { "name": "sharecube", "source": "./", "description": "Publish, edit, and comment on shareable HTML and Markdown artifacts in ShareCube from your coding agent." }
+  ]
+}

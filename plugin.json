@@ -1,0 +1,10 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.1.0/plugin.schema.json",
+  "name": "sharecube",
+  "version": "0.1.0",
+  "description": "Publish, edit, and comment on shareable HTML and Markdown artifacts in ShareCube from your coding agent.",
+  "author": { "name": "Infragate", "url": "https://sharecube.io" },
+  "homepage": "https://sharecube.io/docs/mcp",
+  "repository": "https://github.com/infragate/sharecube-plugin",
+  "keywords": ["sharecube", "artifacts", "sharing", "mcp"]
+}
