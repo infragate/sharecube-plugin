@@ -1,11 +1,33 @@
 {
-  "$schema": "https://agent-plugins.org/schemas/1.1.0/plugin.schema.json",
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "sharecube",
   "version": "0.1.0",
   "description": "Publish, edit, and comment on shareable HTML and Markdown artifacts in ShareCube from your coding agent.",
-  "author": { "name": "Infragate", "url": "https://sharecube.io" },
+  "author": {
+    "name": "Infragate",
+    "url": "https://sharecube.io"
+  },
   "homepage": "https://docs.infragate.ai/sharecube/",
   "repository": "https://github.com/infragate/sharecube-plugin",
   "license": "MIT",
-  "keywords": ["sharecube", "artifacts", "sharing", "mcp"]
+  "keywords": [
+    "sharecube",
+    "artifacts",
+    "sharing",
+    "mcp"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "ShareCube",
+        "shortDescription": "Share agent-made HTML and Markdown artifacts",
+        "developerName": "Infragate",
+        "category": "Productivity",
+        "websiteURL": "https://sharecube.io",
+        "brandColor": "#6249B5",
+        "composerIcon": "./assets/logo.png",
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
 }
