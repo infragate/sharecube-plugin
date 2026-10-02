@@ -28,12 +28,28 @@ for (const [file, manifest] of Object.entries(manifests)) {
   }
 }
 
-for (const file of ['.claude-plugin/marketplace.json', '.cursor-plugin/marketplace.json']) {
+for (const file of ['.agents/plugins/marketplace.json', '.claude-plugin/marketplace.json', '.cursor-plugin/marketplace.json']) {
   expect(read(file).plugins.some((p) => p.name === name), `${file}: no plugin named "${name}"`);
 }
 
-// The same MCP server is spelled three ways: mcp.json (Agent Plugins),
-// .mcp.json (Claude Code, Codex), and inline in the Cursor manifest. Only the
+// Codex only accepts Agent Plugins 1.0.0. Any other agent-plugins.org $schema
+// still wins over .codex-plugin/plugin.json and then fails to load, so Codex
+// shows "Plugin not found" with no name or icon.
+for (const [file, kind] of [['plugin.json', 'plugin'], ['mcp.json', 'mcp']]) {
+  const want = `https://agent-plugins.org/schemas/1.0.0/${kind}.schema.json`;
+  expect(read(file).$schema === want, `${file}: $schema must be ${want} for Codex`);
+}
+
+// Codex takes its interface (display name, logo) from plugin.json's
+// com.openai extension; older Codex builds read .codex-plugin/plugin.json.
+expect(
+  JSON.stringify(manifests['plugin.json'].extensions?.['com.openai']?.interface) ===
+    JSON.stringify(manifests['.codex-plugin/plugin.json'].interface),
+  'plugin.json extensions["com.openai"].interface differs from .codex-plugin/plugin.json interface',
+);
+
+// The same MCP server is spelled three ways: mcp.json (Agent Plugins, Codex),
+// .mcp.json (Claude Code), and inline in the Cursor manifest. Only the
 // transport field differs, so the servers and URLs must match.
 const servers = (mcpServers) =>
   Object.entries(mcpServers).map(([id, server]) => `${id} ${server.url ?? server.command}`).sort().join('\n');
