@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/logo-transparent.png" alt="ShareCube" width="120" height="120">
+![ShareCube](assets/logo-transparent.png)
 
 # ShareCube plugin
 

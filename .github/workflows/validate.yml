@@ -22,32 +22,39 @@ jobs:
       - name: Manifests agree with each other
         run: node scripts/check-manifests.mjs
 
-      # The schema URLs in $schema do not resolve, so fetch them from the spec repo.
+      # The schema URLs in $schema do not resolve, so read them from the spec repo, pinned to a commit.
+      - uses: actions/checkout@v7
+        with:
+          repository: agentplugins/agent-plugins-spec
+          ref: ff8ab5e392cc87bd88d87c060815a87490e51003
+          path: .ci/agent-plugins-spec
+          sparse-checkout: schemas/1.0.0
+
       - name: Agent Plugins 1.0.0 schemas
         run: |
-          base=https://raw.githubusercontent.com/agentplugins/agent-plugins-spec/main/schemas/1.0.0
-          curl -fsSL "$base/plugin.schema.json" -o "$RUNNER_TEMP/plugin.schema.json"
-          curl -fsSL "$base/mcp.schema.json" -o "$RUNNER_TEMP/mcp.schema.json"
-          npx --yes ajv-cli@5 validate --spec=draft2020 --strict=false -s "$RUNNER_TEMP/plugin.schema.json" -d plugin.json
-          npx --yes ajv-cli@5 validate --spec=draft2020 --strict=false -s "$RUNNER_TEMP/mcp.schema.json" -d mcp.json
+          npx --yes ajv-cli@5.0.0 validate --spec=draft2020 --strict=false -s .ci/agent-plugins-spec/schemas/1.0.0/plugin.schema.json -d plugin.json
+          npx --yes ajv-cli@5.0.0 validate --spec=draft2020 --strict=false -s .ci/agent-plugins-spec/schemas/1.0.0/mcp.schema.json -d mcp.json
 
       # Cursor's own validator from cursor/plugin-template, pinned to a commit.
+      - uses: actions/checkout@v7
+        with:
+          repository: cursor/plugin-template
+          ref: 46216072ac5750f782f95bb325b4d12b7c3ae9c9
+          path: .ci/cursor-plugin-template
+          sparse-checkout: scripts
+
       - name: Cursor plugin and marketplace
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/cursor/plugin-template/46216072ac5750f782f95bb325b4d12b7c3ae9c9/scripts/validate-template.mjs -o "$RUNNER_TEMP/validate-cursor.mjs"
-          node "$RUNNER_TEMP/validate-cursor.mjs"
+        run: node .ci/cursor-plugin-template/scripts/validate-template.mjs
 
       - name: Claude Code plugin and marketplace
         run: |
-          npx --yes @anthropic-ai/claude-code plugin validate .claude-plugin/plugin.json
-          npx --yes @anthropic-ai/claude-code plugin validate .
+          npx --yes @anthropic-ai/claude-code@2.1.292 plugin validate .claude-plugin/plugin.json
+          npx --yes @anthropic-ai/claude-code@2.1.292 plugin validate .
 
       # Installs the plugin with the real Codex CLI. Codex rejects manifests
       # that only other validators accept, such as an unsupported $schema.
       - name: Codex marketplace and plugin install
         run: |
-          export CODEX_HOME="$RUNNER_TEMP/codex-home"
-          mkdir -p "$CODEX_HOME"
-          npx --yes @openai/codex@0.160.0 plugin marketplace add "$PWD"
-          npx --yes @openai/codex@0.160.0 plugin add sharecube@sharecube
-          npx --yes @openai/codex@0.160.0 mcp list | grep -q 'https://app.sharecube.io/mcp'
+          npx --yes @openai/codex@0.161.0 plugin marketplace add .
+          npx --yes @openai/codex@0.161.0 plugin add sharecube@sharecube
+          npx --yes @openai/codex@0.161.0 mcp list | grep -q 'https://app.sharecube.io/mcp'

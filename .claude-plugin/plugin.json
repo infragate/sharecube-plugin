@@ -3,9 +3,18 @@
   "displayName": "ShareCube",
   "version": "0.1.0",
   "description": "Publish, edit, and comment on shareable HTML and Markdown artifacts in ShareCube from your coding agent.",
-  "author": { "name": "Infragate", "url": "https://sharecube.io" },
+  "author": {
+    "name": "Infragate",
+    "url": "https://sharecube.io"
+  },
   "homepage": "https://docs.infragate.ai/sharecube/",
+  "privacyPolicyUrl": "https://docs.infragate.ai/privacy-policy/",
   "repository": "https://github.com/infragate/sharecube-plugin",
   "license": "MIT",
-  "keywords": ["sharecube", "artifacts", "sharing", "mcp"]
+  "keywords": [
+    "sharecube",
+    "artifacts",
+    "sharing",
+    "mcp"
+  ]
 }
